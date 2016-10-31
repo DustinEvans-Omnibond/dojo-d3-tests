@@ -6,13 +6,30 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Bar Chart Example</title>
+        <title>Level Chart Example</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <style>
             body {
                 font: 10px arial;
+            }
+            
+            .myLevelChartClass {
+                width: 200px;
+                height: 240px;
+                display: inline-block;
+            }
+            
+            .axis text {
+                font: 10px sans-serif;
+            }
+
+            .axis path,
+            .axis line {
+                fill: none;
+                stroke: #000;
+                shape-rendering: crispEdges;
             }
         </style>
         
@@ -37,10 +54,40 @@ and open the template in the editor.
                 "dojo/domReady!",
                 "dojo/_base/window",
                 "d3/d3",
-                "src/BarChart"
+                "src/LevelChart"
             ],
-            function(domReady, win, d3, BarChart) {
+            function(domReady, win, d3, LevelChart) {
+                var speedChart = window.speedChart = LevelChart({
+                    domNodeStyle: "",
+                    domNodeClass: "myLevelChartClass",
+                    width: 50,
+                    height: 100,
+                    margin: {'top': 20, 'right': 40, 'bottom': 20, 'left': 40},
+                    minLevel: 0,
+                    maxLevel: 3,
+                    level: 1,
+                    color: "red",
+                    xAxisLabel: "x-axis",
+                    yAxisLabel: "Speed",
+                    yAxisAlignment: "left"
+                });
+                win.body().appendChild(speedChart.domNode);
                 
+                var congChart = window.congChart = LevelChart({
+                    domNodeStyle: "",
+                    domNodeClass: "myLevelChartClass",
+                    width: 50,
+                    height: 240,
+                    margin: {'top': 20, 'right': 40, 'bottom': 20, 'left': 40},
+                    minLevel: 0,
+                    maxLevel: 3,
+                    level: 2,
+                    color: "yellow",
+                    xAxisLabel: "x-axis",
+                    yAxisLabel: "Congestion",
+                    yAxisAlignment: "right"
+                });
+                win.body().appendChild(congChart.domNode);
             });
         </script>
         
