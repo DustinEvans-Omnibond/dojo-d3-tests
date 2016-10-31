@@ -54,9 +54,10 @@ and open the template in the editor.
                 "dojo/domReady!",
                 "dojo/_base/window",
                 "d3/d3",
-                "src/LevelChart"
+                "src/LevelChart",
+                "src/RatingChart"
             ],
-            function(domReady, win, d3, LevelChart) {
+            function(domReady, win, d3, LevelChart, RatingChart) {
                 var speedChart = window.speedChart = LevelChart({
                     domNodeStyle: "",
                     domNodeClass: "myLevelChartClass",
@@ -88,6 +89,19 @@ and open the template in the editor.
                     yAxisAlignment: "right"
                 });
                 win.body().appendChild(congChart.domNode);
+                
+                var ratingChart = window.ratingChart = RatingChart({
+                    domNodeStyle: "",
+                    domNodeClass: "myLevelChartClass",
+                    width: 50,
+                    height: 240,
+                    margin: {'top': 20, 'right': 40, 'bottom': 20, 'left': 50},
+                    color: "green",
+                    xAxisLabel: "My Rating",
+                    yAxisLabel: "",
+                    yAxisAlignment: "left"
+                });
+                win.body().appendChild(ratingChart.domNode);
             });
         </script>
         
