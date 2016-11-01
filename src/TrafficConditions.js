@@ -2,8 +2,8 @@
 define([
     "dojo/_base/declare",
     "dojo/dom-construct",
-    "Gauge",
-    "RatingChart"
+    "src/Gauge",
+    "src/RatingChart"
 ],
 function(declare, domConstruct, Gauge, RatingChart) {
     
@@ -13,9 +13,9 @@ function(declare, domConstruct, Gauge, RatingChart) {
         domNodeClass: null,
         
         _SPEED_LEVELS: ["Unknown", "Low", "Medium", "Freeflowing"],
-        _SPEED_COLORS: ["gray", "red", "yellow", "green"],
+        _SPEED_COLORS: ["gray", "#ED1C24", "#FFFF00", "#00FF00"],
         _CONG_LEVELS: ["Unknown", "Low", "Medium", "High"],
-        _CONG_COLORS: ["gray", "green", "yellow", "red"],
+        _CONG_COLORS: ["gray", "#00FF00", "#FFFF00", "#ED1C24"],
                 
         constructor: function(args) {
             this.domNodeStyle = "";
@@ -48,8 +48,8 @@ function(declare, domConstruct, Gauge, RatingChart) {
                 domNodeStyle: "display: inline-block;",
                 domNodeClass: "",
                 width: 50,
-                height: 240,
-                margin: {'top': 20, 'right': 40, 'bottom': 20, 'left': 50},
+                height: 150,
+                margin: {'top': 20, 'right': 15, 'bottom': 20, 'left': 65},
                 ratings: this._SPEED_LEVELS,
                 level: this._SPEED_LEVELS[0],
                 color: this._SPEED_COLORS[0],
@@ -61,7 +61,7 @@ function(declare, domConstruct, Gauge, RatingChart) {
         },
         
         createMOTGauge: function() {
-            var diameter = 240,
+            var diameter = 150,
                 min = 0,
                 max = 100,
                 range = max - min,
@@ -97,8 +97,8 @@ function(declare, domConstruct, Gauge, RatingChart) {
                 domNodeStyle: "display: inline-block;",
                 domNodeClass: "",
                 width: 50,
-                height: 240,
-                margin: {'top': 20, 'right': 50, 'bottom': 20, 'left': 40},
+                height: 150,
+                margin: {'top': 20, 'right': 65, 'bottom': 20, 'left': 15},
                 ratings: this._CONG_LEVELS,
                 level: this._CONG_LEVELS[0],
                 color: this._CONG_COLORS[0],
@@ -114,25 +114,35 @@ function(declare, domConstruct, Gauge, RatingChart) {
         },
         
         setSpeed: function(value) {
-            
+            if ( value >= -1 && value <= 2 ) {
+                var adjValue = value + 1;
+                this._speedChart.setLevel(this._SPEED_LEVELS[adjValue], this._SPEED_COLORS[adjValue]);
+            } else {
+                this._speedChart.setLevel(this._SPEED_LEVELS[0], this._SPEED_COLORS[0]);
+            }
         },
         
         setMOT: function(value) {
-            
+            if ( value >= 0 && value <= 100 ) {
+                this._MOTGauge.redraw(value, 500);
+            } else {
+                this._MOTGauge.redraw(0, 500);
+            }
         },
         
         setCongestion: function(value) {
-            
+            if ( value >= -1 && value <= 2 ) {
+                var adjValue = value + 1;
+                this._congestionChart.setLevel(this._CONG_LEVELS[adjValue], this._CONG_COLORS[adjValue]);
+            } else {
+                this._congestionChart.setLevel(this._CONG_LEVELS[0], this._CONG_COLORS[0]);
+            }
         },
         
         set: function(speedValue, congValue, motValue) {
             this.setSpeed(speedValue);
             this.setCongestion(congValue);
             this.setMOT(motValue);
-        },
-        
-        reset: function() {
-            
         }
         
     });

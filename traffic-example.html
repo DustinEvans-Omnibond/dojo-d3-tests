@@ -6,11 +6,66 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Traffic Conditions Example</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <style>
+            body {
+                font: 10px arial;
+            }
+            
+            .myLevelChartClass {
+                width: 200px;
+                height: 240px;
+                display: inline-block;
+            }
+            
+            .axis text {
+                font: 10px sans-serif;
+            }
+
+            .axis path,
+            .axis line {
+                fill: none;
+                stroke: #000;
+                shape-rendering: crispEdges;
+            }
+        </style>
+        
+        <script src="dojo/dojo.js">
+            var dojoConfig = {
+                has: {
+                    'dojo-firebug': false
+                },
+                parseOnLoad: false,
+                isDebug: false,
+                async: true,
+                packages: [{
+                    'name': "d3",
+                    'location': "d3/d3.js"
+                }]
+            };
+        </script>
+        
+        
+        <script language="Javascript" type="text/javascript">
+            require([
+                "dojo/domReady!",
+                "dojo/_base/window",
+                "d3/d3",
+                "src/TrafficConditions"
+            ],
+            function(domReady, win, d3, TrafficConditions) {
+                var tc = window.tc = new TrafficConditions({
+                    
+                });
+                win.body().appendChild(tc.domNode);
+            });
+        </script>
+        
     </head>
     <body>
-        <div>TODO write content</div>
+        
     </body>
 </html>
